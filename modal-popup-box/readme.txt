@@ -3,8 +3,8 @@ Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkh
 Donate link: https://paypal.me/awplife
 Tags: Popup, popup builder, modal popup, popup box, responsive popups, popup maker
 Requires at least: 4.0
-Tested up to: 6.5.5
-Stable tag: 1.5.5
+Tested up to: 6.6.2
+Stable tag: 1.5.6
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -84,6 +84,9 @@ https://wordpress.org/plugins/modal-popup-box/
 6. Portfolio Filter Gallery in Modal Pop Box
 
 == Changelog ==
+
+= 1.5.6 =
+* Testing plugin for wordpress 6.6.2
 
 = 1.5.5 =
 * Testing plugin for wordpress 6.5.5

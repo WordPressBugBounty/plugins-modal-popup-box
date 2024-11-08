@@ -3,7 +3,7 @@
 Plugin Name: Modal Popup Box
 Plugin URI: https://awplife.com/wordpress-plugins/modal-popup-box-premium/
 Description: A set of experimental modal window appearance effects with CSS transitions and animations.An Easy And Powerful modal popup box plugin for WordPress.
-Version: 1.5.6
+Version: 1.5.7
 Author: A WP Life
 Author URI: https://awplife.com/
 License: GPLv2 or later
@@ -38,7 +38,7 @@ if ( ! class_exists( 'Modal_Popup_Box' ) ) {
 
 		protected function _constants() {
 			// Plugin Version
-			define( 'MPB_PLUGIN_VER', '1.5.6' );
+			define( 'MPB_PLUGIN_VER', '1.5.7' );
 
 			// Plugin Text Domain
 			define( 'MPB_TXTDM', 'modal-popup-box' );

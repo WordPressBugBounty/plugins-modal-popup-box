@@ -3,7 +3,7 @@
 Plugin Name: Modal Popup Box
 Plugin URI: https://awplife.com/wordpress-plugins/modal-popup-box-premium/
 Description: A set of experimental modal window appearance effects with CSS transitions and animations.An Easy And Powerful modal popup box plugin for WordPress.
-Version: 1.6.1
+Version: 1.6.2
 Author: A WP Life
 Author URI: https://awplife.com/
 License: GPLv2 or later
@@ -38,13 +38,13 @@ if ( ! class_exists( 'Modal_Popup_Box' ) ) {
 
 		protected function _constants() {
 			// Plugin Version
-			define( 'MPB_PLUGIN_VER', '1.6.1' );
+			define( 'MPB_PLUGIN_VER', '1.6.2' );
 
 			// Plugin Text Domain
 			define( 'MPB_TXTDM', 'modal-popup-box' );
 
 			// Plugin Name
-			define( 'MPB_PLUGIN_NAME', __( 'Modal Popup Box', MPB_TXTDM ) );
+			define( 'MPB_PLUGIN_NAME', 'Modal Popup Box' );
 
 			// Plugin Slug
 			define( 'MPB_PLUGIN_SLUG', 'modalpopupbox' );
@@ -102,7 +102,6 @@ if ( ! class_exists( 'Modal_Popup_Box' ) ) {
 		// Modal Box cpt shortcode column before date columns
 		public function set_modalpopupbox_shortcode_column_name( $defaults ) {
 			$new       = array();
-			$shortcode = $columns['modalpopupbox_shortcode'];  // save the tags column
 			unset( $defaults['tags'] );   // remove it from the columns list
 
 			foreach ( $defaults as $key => $value ) {
@@ -251,42 +250,43 @@ if ( ! class_exists( 'Modal_Popup_Box' ) ) {
 		} // end of upload multiple image
 
 		public function _mpb_save_settings( $post_id ) {
-			if (current_user_can('manage_options')) {
-				if ( isset( $_POST['mpb_save_nonce'] ) ) {
-					if (isset($_POST['mpb_save_nonce']) && wp_verify_nonce($_POST['mpb_save_nonce'], 'mpb_save_settings')) {
+			// Check if user can edit this specific post (allows editors, not just admins)
+			if ( ! current_user_can( 'edit_post', $post_id ) ) {
+				return;
+			}
+			
+			if ( isset( $_POST['mpb_save_nonce'] ) && wp_verify_nonce( $_POST['mpb_save_nonce'], 'mpb_save_settings' ) ) {
 
-						$mpb_show_modal                	= sanitize_text_field( $_POST['mpb_show_modal'] );
-						$mpb_main_button_text          	= sanitize_text_field( $_POST['mpb_main_button_text'] );
-						$mpb_main_button_size          	= sanitize_text_field( $_POST['mpb_main_button_size'] );
-						$mpb_main_button_color         	= sanitize_text_field( $_POST['mpb_main_button_color'] );
-						$mpb_main_button_text_color    	= sanitize_text_field( $_POST['mpb_main_button_text_color'] );
-						$modal_popup_design            	= sanitize_text_field( $_POST['modal_popup_design'] );
-						$mpb_animation_effect_open_btn 	= sanitize_text_field( $_POST['mpb_animation_effect_open_btn'] );
-						$mpb_button2_text             	= sanitize_text_field( $_POST['mpb_button2_text'] );
-						$mpb_width                    	= sanitize_text_field( $_POST['mpb_width'] );
-						$mpb_height                   	= sanitize_text_field( $_POST['mpb_height'] );
-						$mpb_bt_ds						= sanitize_text_field( $_POST['mpb_bt_ds'] );
-						$mpb_custom_css               	= sanitize_text_field( $_POST['mpb_custom_css'] );
+				$mpb_show_modal                	= isset( $_POST['mpb_show_modal'] ) ? sanitize_text_field( $_POST['mpb_show_modal'] ) : 'onclick';
+				$mpb_main_button_text          	= isset( $_POST['mpb_main_button_text'] ) ? sanitize_text_field( $_POST['mpb_main_button_text'] ) : 'Click Me';
+				$mpb_main_button_size          	= isset( $_POST['mpb_main_button_size'] ) ? sanitize_text_field( $_POST['mpb_main_button_size'] ) : 'btn btn-lg';
+				$mpb_main_button_color         	= isset( $_POST['mpb_main_button_color'] ) ? sanitize_text_field( $_POST['mpb_main_button_color'] ) : '#008EC2';
+				$mpb_main_button_text_color    	= isset( $_POST['mpb_main_button_text_color'] ) ? sanitize_text_field( $_POST['mpb_main_button_text_color'] ) : '#ffffff';
+				$modal_popup_design            	= isset( $_POST['modal_popup_design'] ) ? sanitize_text_field( $_POST['modal_popup_design'] ) : 'color_1';
+				$mpb_animation_effect_open_btn 	= isset( $_POST['mpb_animation_effect_open_btn'] ) ? sanitize_text_field( $_POST['mpb_animation_effect_open_btn'] ) : 'md-effect-1';
+				$mpb_button2_text             	= isset( $_POST['mpb_button2_text'] ) ? sanitize_text_field( $_POST['mpb_button2_text'] ) : 'Close Me';
+				$mpb_width                    	= isset( $_POST['mpb_width'] ) ? sanitize_text_field( $_POST['mpb_width'] ) : '35';
+				$mpb_height                   	= isset( $_POST['mpb_height'] ) ? sanitize_text_field( $_POST['mpb_height'] ) : '350';
+				$mpb_bt_ds						= isset( $_POST['mpb_bt_ds'] ) ? sanitize_text_field( $_POST['mpb_bt_ds'] ) : 'true';
+				$mpb_custom_css               	= isset( $_POST['mpb_custom_css'] ) ? sanitize_text_field( $_POST['mpb_custom_css'] ) : '';
 
-						$modal_popup_box_settings = array(
-							'mpb_show_modal'                => $mpb_show_modal,
-							'mpb_main_button_text'          => $mpb_main_button_text,
-							'mpb_main_button_size'          => $mpb_main_button_size,
-							'mpb_main_button_color'         => $mpb_main_button_color,
-							'mpb_main_button_text_color'    => $mpb_main_button_text_color,
-							'modal_popup_design'            => $modal_popup_design,
-							'mpb_animation_effect_open_btn' => $mpb_animation_effect_open_btn,
-							'mpb_button2_text'              => $mpb_button2_text,
-							'mpb_width'                     => $mpb_width,
-							'mpb_height'                    => $mpb_height,
-							'mpb_bt_ds'                  	  => $mpb_bt_ds,
-							'mpb_custom_css'                => $mpb_custom_css,
-						);
+				$modal_popup_box_settings = array(
+					'mpb_show_modal'                => $mpb_show_modal,
+					'mpb_main_button_text'          => $mpb_main_button_text,
+					'mpb_main_button_size'          => $mpb_main_button_size,
+					'mpb_main_button_color'         => $mpb_main_button_color,
+					'mpb_main_button_text_color'    => $mpb_main_button_text_color,
+					'modal_popup_design'            => $modal_popup_design,
+					'mpb_animation_effect_open_btn' => $mpb_animation_effect_open_btn,
+					'mpb_button2_text'              => $mpb_button2_text,
+					'mpb_width'                     => $mpb_width,
+					'mpb_height'                    => $mpb_height,
+					'mpb_bt_ds'                  	=> $mpb_bt_ds,
+					'mpb_custom_css'                => $mpb_custom_css,
+				);
 
-						$awl_modal_popup_box_shortcode_setting = 'awl_mpb_settings_' . $post_id;
-						update_post_meta($post_id, $awl_modal_popup_box_shortcode_setting, json_encode($modal_popup_box_settings));
-					}
-				}
+				$awl_modal_popup_box_shortcode_setting = 'awl_mpb_settings_' . $post_id;
+				update_post_meta($post_id, $awl_modal_popup_box_shortcode_setting, json_encode($modal_popup_box_settings));
 			}
 		}//end _mpb_save_settings()
 
@@ -299,6 +299,88 @@ if ( ! class_exists( 'Modal_Popup_Box' ) ) {
 			require_once 'our-theme/awp-theme.php';
 		}
 	} // end of class
+
+	/**
+	 * Safely parse modal popup box settings.
+	 * Handles both JSON and legacy serialized formats without using unserialize().
+	 * 
+	 * @param int $post_id The post ID
+	 * @return array Settings array
+	 */
+	function mpb_get_safe_settings($post_id) {
+		$post_id = intval($post_id);
+		$meta_key = 'awl_mpb_settings_' . $post_id;
+		$raw_data = get_post_meta($post_id, $meta_key, true);
+		
+		if (empty($raw_data)) {
+			return array();
+		}
+		
+		// First, try to decode as JSON (current format)
+		$settings = json_decode($raw_data, true);
+		if (is_array($settings)) {
+			return $settings;
+		}
+		
+		// Check if it's base64 encoded (legacy format)
+		$decoded = base64_decode($raw_data, true);
+		if ($decoded !== false) {
+			// Try JSON decode on decoded data
+			$settings = json_decode($decoded, true);
+			if (is_array($settings)) {
+				// Migrate to new format
+				update_post_meta($post_id, $meta_key, json_encode($settings));
+				return $settings;
+			}
+			
+			// Legacy serialized format - parse safely with regex (no unserialize!)
+			if (strpos($decoded, 'a:') === 0) {
+				$settings = mpb_safe_parse_serialized($decoded);
+				if (!empty($settings)) {
+					// Migrate to JSON format
+					update_post_meta($post_id, $meta_key, json_encode($settings));
+					return $settings;
+				}
+			}
+		}
+		
+		return array();
+	}
+
+	/**
+	 * Safely parse a PHP serialized array string without using unserialize().
+	 * Only extracts string and integer values, ignoring any object definitions.
+	 * This prevents PHP Object Injection attacks.
+	 * 
+	 * @param string $serialized The serialized string
+	 * @return array Extracted key-value pairs
+	 */
+	function mpb_safe_parse_serialized($serialized) {
+		$result = array();
+		
+		// Only process if it looks like a serialized array
+		if (strpos($serialized, 'a:') !== 0) {
+			return $result;
+		}
+		
+		// Extract string key-value pairs: s:N:"key";s:N:"value";
+		$pattern = '/s:\d+:"([^"]+)";s:\d+:"([^"]*)";/';
+		if (preg_match_all($pattern, $serialized, $matches, PREG_SET_ORDER)) {
+			foreach ($matches as $match) {
+				$result[sanitize_text_field($match[1])] = sanitize_text_field($match[2]);
+			}
+		}
+		
+		// Extract string key with integer value: s:N:"key";i:N;
+		$pattern_int = '/s:\d+:"([^"]+)";i:(\d+);/';
+		if (preg_match_all($pattern_int, $serialized, $matches, PREG_SET_ORDER)) {
+			foreach ($matches as $match) {
+				$result[sanitize_text_field($match[1])] = intval($match[2]);
+			}
+		}
+		
+		return $result;
+	}
 
 	// register sf scripts
 	function awplife_mpb_register_scripts() {

@@ -97,7 +97,7 @@ while ( $loop->have_posts() ) :
 		 style="display:none;" <?php } ?>></div>
 	<?php
 endwhile;
-wp_reset_query();
+wp_reset_postdata();
 ?>
 <script>
 /**

@@ -14,45 +14,11 @@ function awl_modal_popup_box_shortcode( $post_id ) {
 	wp_enqueue_script( 'mbp-classie-js' );
 	wp_enqueue_script( 'mbp-cssParser-js' );
 
-	// unsterilized	
-	$modal_popup_box_id = esc_attr($post_id['id']);
+	// Get post ID safely
+	$modal_popup_box_id = intval($post_id['id']);
 
-		if (!function_exists('is_mpb_serialized')) {
-			function is_mpb_serialized($str) {
-			return ($str == serialize(false) || @unserialize($str) !== false);
-			}
-		}
-		// unsterilized	
-		$modal_popup_box_id = esc_attr($post_id['id']);
-
-		// Retrieve the base64 encoded data
-		$encodedData = get_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, true);
-
-		// Decode the base64 encoded data
-		$decodedData = base64_decode($encodedData);
-
-		// Check if the data is serialized
-		if (is_mpb_serialized($decodedData)) {
-
-		// The data is serialized, so unserialize it
-		$modal_popup_box_settings = unserialize($decodedData);
-		// Optionally, convert the unserialized data to JSON and save it back in base64 encoding for future access
-		// This step is optional but recommended to transition your data format
-
-		$jsonEncodedData = json_encode($modal_popup_box_settings);
-		update_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, $jsonEncodedData);
-
-		// Now, to use the newly saved format, fetch and decode again
-		$encodedData = get_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, true);
-		$modal_popup_box_settings = json_decode(($encodedData), true);
-
-		} else {
-
-		// Assume the data is in JSON format
-		$jsonData = get_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, true);
-		// Decode the JSON string into an associative array
-		$modal_popup_box_settings = json_decode($jsonData, true); // Ensure true is passed to get an associative array
-		}
+	// Get settings using the safe parser function (prevents PHP Object Injection)
+	$modal_popup_box_settings = mpb_get_safe_settings($modal_popup_box_id);
 		
 		
 
@@ -241,7 +207,7 @@ function awl_modal_popup_box_shortcode( $post_id ) {
 		opacity: 1;
 	}
 	
-	<?php echo $mpb_custom_css; ?>
+	<?php echo wp_strip_all_tags( $mpb_custom_css ); ?>
 	</style>
 	<?php
 	require 'modal-popup-box-output.php';

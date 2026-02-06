@@ -22,40 +22,10 @@ wp_enqueue_style( 'mbp-styles-css', MPB_PLUGIN_URL . 'assets/css/styles.css' );
 wp_enqueue_style( 'mbp-toogle-button-css', MPB_PLUGIN_URL . 'assets/css/toogle-button.css' );
 
 // load settings
-$modal_popup_box_id = esc_attr($post->ID);
+$modal_popup_box_id = intval($post->ID);
 
-function is_mpb_serialized($str)
-{
-	return ($str == serialize(false) || @unserialize($str) !== false);
-}
-
-// Retrieve the base64 encoded data
-$encodedData = get_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, true);
-
-// Decode the base64 encoded data
-$decodedData = base64_decode($encodedData);
-
-// Check if the data is serialized
-if (is_mpb_serialized($decodedData)) {
-
-	// The data is serialized, so unserialize it
-	$modal_popup_box_settings = unserialize($decodedData);
-	// Optionally, convert the unserialized data to JSON and save it back in base64 encoding for future access
-	// This step is optional but recommended to transition your data format
-
-	$jsonEncodedData = json_encode($modal_popup_box_settings);
-	update_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, $jsonEncodedData);
-
-	// Now, to use the newly saved format, fetch and decode again
-	$encodedData = get_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, true);
-	$modal_popup_box_settings = json_decode(($encodedData), true);
-
-} else {
-	// Assume the data is in JSON format
-	$jsonData = get_post_meta($modal_popup_box_id, 'awl_mpb_settings_' . $modal_popup_box_id, true);
-	// Decode the JSON string into an associative array
-	$modal_popup_box_settings = json_decode($jsonData, true); // Ensure true is passed to get an associative array
-}
+// Get settings using the safe parser function (prevents PHP Object Injection)
+$modal_popup_box_settings = mpb_get_safe_settings($modal_popup_box_id);
 
 ?>
 <style>
@@ -161,7 +131,7 @@ float: left;
 						<div class="col-md-8">
 							<div class="ma_field p-4">
 								<?php if(isset($modal_popup_box_settings['mpb_main_button_text'])) $mpb_main_button_text = $modal_popup_box_settings['mpb_main_button_text']; else $mpb_main_button_text = "Click Me"; ?>	
-								<input type="text" class="selectbox_settings" id="mpb_main_button_text" name="mpb_main_button_text" value="<?php echo esc_html($mpb_main_button_text); ?>" placeholder="Type Button Text">
+								<input type="text" class="selectbox_settings" id="mpb_main_button_text" name="mpb_main_button_text" value="<?php echo esc_attr($mpb_main_button_text); ?>" placeholder="Type Button Text">
 							</div>
 						</div>
 						<div class="col-md-4">
@@ -312,7 +282,7 @@ float: left;
 							}
 							?>
 								
-							<input type="text" class="selectbox_settings " id="mpb_button2_text" name="mpb_button2_text" value="<?php echo esc_html( $mpb_button2_text ); ?>" placeholder="Type Button Text">
+							<input type="text" class="selectbox_settings " id="mpb_button2_text" name="mpb_button2_text" value="<?php echo esc_attr( $mpb_button2_text ); ?>" placeholder="Type Button Text">
 						</div>
 					</div>
 					<div class="col-md-4">
@@ -394,7 +364,7 @@ float: left;
 								$mpb_custom_css = '';
 							}
 							?>
-							<textarea name="mpb_custom_css" id="mpb_custom_css" style="width: 100%; height: 120px;" placeholder="Type direct CSS code here. Don't use <style>...</style> tag."><?php echo $mpb_custom_css; ?></textarea>
+							<textarea name="mpb_custom_css" id="mpb_custom_css" style="width: 100%; height: 120px;" placeholder="Type direct CSS code here. Don't use <style>...</style> tag."><?php echo esc_textarea( $mpb_custom_css ); ?></textarea>
 						</div>
 					</div>
 				</div>

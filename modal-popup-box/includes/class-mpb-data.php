@@ -49,6 +49,7 @@ class MPB_Data
 			'mpb_overlay_opacity' => '60',
 			'mpb_modal_bg_color' => '#008EC2',
 			'mpb_overlay_color' => '#000000',
+			'mpb_close_btn_bg_color' => 'transparent',
 		);
 	}
 

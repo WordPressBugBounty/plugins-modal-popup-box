@@ -100,10 +100,11 @@ body.mpb-modal-open {
     transition: opacity 0.2s ease;
 }
 
-.mpb-md-trigger:not(.btn),
-.mpb-md-setperspective:not(.btn) {
-    padding: 10px 20px;
+.mpb-md-trigger:not(.mpb-btn),
+.mpb-md-setperspective:not(.mpb-btn) {
+    padding: 12px 24px !important;
     border-radius: 4px;
+    line-height: 1.2 !important;
 }
 
 .mpb-md-trigger:hover {
@@ -127,7 +128,8 @@ body.mpb-modal-open {
     text-decoration: none;
 }
 
-.mpb-btn:hover, .mpb-btn:focus {
+.mpb-btn:hover,
+.mpb-btn:focus {
     text-decoration: none;
     outline: 0;
 }
@@ -141,7 +143,6 @@ body.mpb-modal-open {
 .mpb-btn-default {
     color: #333;
     background-color: #fff;
-    border-color: #ccc;
 }
 
 .mpb-btn-primary:hover {
@@ -177,9 +178,17 @@ body.mpb-modal-open {
     border-radius: 6px;
 }
 
-.mpb-text-left { text-align: left !important; }
-.mpb-text-center { text-align: center !important; }
-.mpb-text-right { text-align: right !important; }
+.mpb-text-left {
+    text-align: left !important;
+}
+
+.mpb-text-center {
+    text-align: center !important;
+}
+
+.mpb-text-right {
+    text-align: right !important;
+}
 
 /* ── Effect 1: Fade in & Scale ───────────────────── */
 .mpb-md-effect-1 .mpb-md-content {

@@ -147,7 +147,7 @@ class MPB_Frontend
                     </div>
                     <div class="mpb-buttons text-center">
                         <button type="button"
-                            class="mpb-btn mpb-btn-primary <?php echo esc_attr($close_btn_class); ?> mpb-btn mpb-btn-default mpb-text-center mpb-md-close">
+                            class="mpb-btn <?php echo esc_attr($close_btn_class); ?> mpb-text-center mpb-md-close">
                             <?php echo esc_html($close_text); ?>
                         </button>
                     </div>
@@ -246,7 +246,7 @@ class MPB_Frontend
                 position: absolute;
                 top: 10px;
                 right: 14px;
-                background: none;
+                background-color: {$settings['mpb_close_btn_bg_color']} !important;
                 border: none;
                 font-size: 22px;
                 cursor: pointer;
@@ -260,7 +260,7 @@ class MPB_Frontend
             }
             .mpb-close-x:hover {
                 opacity: 1;
-                background-color: transparent !important;
+                background-color: {$settings['mpb_close_btn_bg_color']} !important;
                 border-color: {$close_icon_color} !important;
             }
             #mpb-wrapper-{$post_id} .mpb-md-overlay {

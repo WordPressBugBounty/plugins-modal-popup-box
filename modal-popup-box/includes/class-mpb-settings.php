@@ -330,19 +330,6 @@ class MPB_Settings
                 </tr>
                 <tr>
                     <th scope="row">
-                        <label for="mpb_button2_color">
-                            <?php esc_html_e('Close Button Color', 'modal-popup-box'); ?>
-                        </label>
-                        <p class="description">
-                            <?php esc_html_e('Background color of the close button.', 'modal-popup-box'); ?>
-                        </p>
-                    </th>
-                    <td>
-                        <?php $this->field_color('mpb_button2_color', $settings['mpb_button2_color'], '#666666'); ?>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
                         <label for="mpb_button2_text_color">
                             <?php esc_html_e('Close Button Text Color', 'modal-popup-box'); ?>
                         </label>

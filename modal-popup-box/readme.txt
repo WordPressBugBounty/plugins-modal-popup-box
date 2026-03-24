@@ -5,7 +5,7 @@ Tags: popup builder, modal popup, pop up box, responsive popups, popup maker
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.0
+Stable tag: 2.0.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,15 @@ Upgrade to the premium version for advanced features:
 6.  Filterable Portfolio Gallery in a Pop Up Box
 
 == Changelog ==
+
+= 2.0.1 =
+* Security: Implemented granular data sanitization for admin settings and AJAX imports.
+* Namespace Safety: Applied 'mpb-' prefix to all generic CSS classes to prevent conflicts.
+* Performance: Migrated dynamic CSS to wp_add_inline_style() for CSP compliance.
+* Accessibility: Implemented keyboard focus trap and ARIA-compliant HTML structure.
+* YouTube Fix: Added automatic 'enablejsapi=1' injection for reliable auto-pause on close.
+* Fixed: Critical fatal error related to versioning constant mismatch.
+* Fully hardened for WordPress.org repository compliance.
 
 = 2.0.0 =
 * Enhancement: Removed Bootstrap dependency and replaced with custom lightweight utility classes to improve performance and prevent theme conflicts.

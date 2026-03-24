@@ -1,0 +1,535 @@
+/**
+ * Modal Popup Box — Frontend CSS (Merged)
+ *
+ * Contains: modal positioning, responsive breakpoints,
+ * animation effect transitions, and base modal styling.
+ *
+ * @package ModalPopupBox
+ * @since   2.0.0
+ */
+
+/* ── Modal Viewport Wrapper ──────────────────────── */
+.mpb-modal-wrapper {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: none !important;
+    margin: 0 !important;
+    z-index: 999;
+    overflow: hidden;
+    pointer-events: none;
+    visibility: hidden;
+}
+
+.mpb-modal-wrapper.mpb-wrapper-show {
+    visibility: visible;
+    pointer-events: auto;
+}
+
+/* ── Modal Base ──────────────────────────────────── */
+.mpb-md-modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    max-width: 70%;
+    min-width: 15%;
+    height: auto;
+    z-index: 1000 !important;
+    visibility: hidden;
+    transform: translateX(-50%) translateY(-50%);
+}
+
+.mpb-md-show {
+    visibility: visible;
+    display: block !important;
+}
+
+/* Lock scroll while a modal is open — target both html and body
+   because some themes set overflow on html, not body. */
+html.mpb-modal-open,
+body.mpb-modal-open {
+    overflow: hidden !important;
+    height: 100%;
+}
+
+/* ── Overlay Base ────────────────────────────────── */
+.mpb-md-overlay {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    visibility: hidden;
+    top: 0;
+    left: 0;
+    z-index: 999;
+    opacity: 0;
+    background: rgba(0, 0, 0, 0.6);
+    transition: all 0.3s;
+    pointer-events: auto;
+}
+
+.mpb-md-show~.mpb-md-overlay {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* ── Content Base ────────────────────────────────── */
+.mpb-md-content {
+    color: #fff;
+    position: relative;
+    border-radius: 3px;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.mpb-md-content h3 {
+    margin: 0;
+    padding: 15px 20px;
+    font-weight: 700;
+    background: rgba(0, 0, 0, 0.1);
+}
+
+/* ── Trigger Button ──────────────────────────────── */
+.mpb-md-trigger,
+.mpb-md-setperspective {
+    display: inline-block;
+    cursor: pointer;
+    text-align: center;
+    font-weight: 600;
+    transition: opacity 0.2s ease;
+}
+
+.mpb-md-trigger:not(.btn),
+.mpb-md-setperspective:not(.btn) {
+    padding: 10px 20px;
+    border-radius: 4px;
+}
+
+.mpb-md-trigger:hover {
+    opacity: 0.9;
+}
+
+/* ── Custom Button & Utility Classes (Bootstrap Replacement) ──────────────── */
+.mpb-btn {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 6px 12px !important;
+    font-size: 14px !important;
+    line-height: 1.42857143 !important;
+    border-radius: 4px !important;
+    transition: all 0.2s ease-in-out;
+    text-decoration: none;
+}
+
+.mpb-btn:hover, .mpb-btn:focus {
+    text-decoration: none;
+    outline: 0;
+}
+
+.mpb-btn-primary {
+    color: #fff;
+    background-color: #337ab7;
+    border-color: #2e6da4;
+}
+
+.mpb-btn-default {
+    color: #333;
+    background-color: #fff;
+    border-color: #ccc;
+}
+
+.mpb-btn-primary:hover {
+    background-color: #286090;
+    border-color: #204d74;
+}
+
+.mpb-btn-xs {
+    padding: 1px 5px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    border-radius: 3px !important;
+}
+
+.mpb-btn-sm {
+    padding: 5px 10px !important;
+    font-size: 12px !important;
+    line-height: 1.5 !important;
+    border-radius: 3px !important;
+}
+
+.mpb-btn-lg {
+    padding: 10px 16px !important;
+    font-size: 18px !important;
+    line-height: 1.3333333 !important;
+    border-radius: 6px !important;
+}
+
+.mpb-btn-lg {
+    padding: 10px 16px;
+    font-size: 18px;
+    line-height: 1.3333333;
+    border-radius: 6px;
+}
+
+.mpb-text-left { text-align: left !important; }
+.mpb-text-center { text-align: center !important; }
+.mpb-text-right { text-align: right !important; }
+
+/* ── Effect 1: Fade in & Scale ───────────────────── */
+.mpb-md-effect-1 .mpb-md-content {
+    transform: scale(0.7);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-1 .mpb-md-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* ── Effect 2: Slide in (right) ──────────────────── */
+.mpb-md-effect-2 .mpb-md-content {
+    transform: translateX(20%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.25, 0.5, 0.5, 0.9);
+}
+
+.mpb-md-show.mpb-md-effect-2 .mpb-md-content {
+    transform: translateX(0);
+    opacity: 1;
+}
+
+/* ── Effect 3: Slide in (bottom) ─────────────────── */
+.mpb-md-effect-3 .mpb-md-content {
+    transform: translateY(20%);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-3 .mpb-md-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ── Effect 4: Newspaper ─────────────────────────── */
+.mpb-md-effect-4 .mpb-md-content {
+    transform: scale(0) rotate(720deg);
+    opacity: 0;
+    transition: all 0.5s;
+}
+
+.mpb-md-show.mpb-md-effect-4 .mpb-md-content {
+    transform: scale(1) rotate(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 5: Fall ──────────────────────────────── */
+.mpb-md-effect-5.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-5 .mpb-md-content {
+    transform-style: preserve-3d;
+    transform: translateZ(600px) rotateX(20deg);
+    opacity: 0;
+}
+
+.mpb-md-show.mpb-md-effect-5 .mpb-md-content {
+    transition: all 0.3s ease-in;
+    transform: translateZ(0) rotateX(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 6: Side Fall ─────────────────────────── */
+.mpb-md-effect-6.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-6 .mpb-md-content {
+    transform-style: preserve-3d;
+    transform: translate(30%) translateZ(600px) rotate(10deg);
+    opacity: 0;
+}
+
+.mpb-md-show.mpb-md-effect-6 .mpb-md-content {
+    transition: all 0.3s ease-in;
+    transform: translate(0) translateZ(0) rotate(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 7: Sticky Up ─────────────────────────── */
+.mpb-md-effect-7 .mpb-md-content {
+    transform: translateY(200%);
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.mpb-md-show.mpb-md-effect-7 .mpb-md-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ── Effect 8: 3D Flip (horizontal) ──────────────── */
+.mpb-md-effect-8.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-8 .mpb-md-content {
+    transform-style: preserve-3d;
+    transform: rotateY(-70deg);
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.mpb-md-show.mpb-md-effect-8 .mpb-md-content {
+    transform: rotateY(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 9: 3D Flip (vertical) ────────────────── */
+.mpb-md-effect-9.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-9 .mpb-md-content {
+    transform-style: preserve-3d;
+    transform: rotateX(-70deg);
+    transition: all 0.3s;
+    opacity: 0;
+}
+
+.mpb-md-show.mpb-md-effect-9 .mpb-md-content {
+    transform: rotateX(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 10: 3D Sign ──────────────────────────── */
+.mpb-md-effect-10.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-10 .mpb-md-content {
+    transform-style: preserve-3d;
+    transform: rotateX(-60deg);
+    transform-origin: 50% 0;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-10 .mpb-md-content {
+    transform: rotateX(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 11: Super Scaled ────────────────────── */
+.mpb-md-effect-11 .mpb-md-content {
+    transform: scale(2);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-11 .mpb-md-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* ── Effect 12: Just Me ─────────────────────────── */
+.mpb-md-effect-12 .mpb-md-content {
+    transform: scale(0.8);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-12~.mpb-md-overlay {
+    background: #e74c3c;
+}
+
+.mpb-md-show.mpb-md-effect-12 .mpb-md-content {
+    transform: scale(1);
+    opacity: 1;
+}
+
+/* ── Effect 13: 3D Slit ─────────────────────────── */
+.mpb-md-effect-13.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-13 .mpb-md-content {
+    transform-style: preserve-3d;
+}
+
+@keyframes slit {
+    50% {
+        transform: translateZ(-250px) rotateY(89deg);
+        opacity: 0.5;
+        animation-timing-function: ease-out;
+    }
+
+    100% {
+        transform: translateZ(0) rotateY(0deg);
+        opacity: 1;
+    }
+}
+
+.mpb-md-show.mpb-md-effect-13 .mpb-md-content {
+    animation: slit 0.7s forwards ease-out;
+}
+
+/* ── Effect 14: 3D Rotate Bottom ────────────────── */
+.mpb-md-effect-14.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-14 .mpb-md-content {
+    transform-style: preserve-3d;
+    transform: translateY(100%) rotateX(90deg);
+    transform-origin: 0 100%;
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.mpb-md-show.mpb-md-effect-14 .mpb-md-content {
+    transform: translateY(0) rotateX(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 15: 3D Rotate In Left ───────────────── */
+.mpb-md-effect-15.mpb-md-modal {
+    perspective: 1300px;
+}
+
+.mpb-md-effect-15 .mpb-md-content {
+    transform-style: preserve-3d;
+    transform: translateZ(-100px) translateX(-30%) rotateY(90deg);
+    opacity: 0;
+    transition: all 0.3s ease-out;
+}
+
+.mpb-md-show.mpb-md-effect-15 .mpb-md-content {
+    transform: translateZ(0) translateX(0) rotateY(0deg);
+    opacity: 1;
+}
+
+/* ── Effect 16: Blur ────────────────────────────── */
+.mpb-md-effect-16 .mpb-md-content {
+    transform: translateY(-5%);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-16~.mpb-md-overlay {
+    background: rgba(0, 0, 0, 0.6);
+}
+
+.mpb-md-show.mpb-md-effect-16 .mpb-md-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ── Effect 17: Let me in ───────────────────────── */
+.mpb-md-effect-17 .mpb-md-content {
+    transform: translateY(-200%);
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-17 .mpb-md-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ── Effect 18: Make way! ───────────────────────── */
+.mpb-md-effect-18 .mpb-md-content {
+    transform: rotateZ(-5deg);
+    transform-origin: 0 0;
+    opacity: 0;
+    transition: all 0.3s;
+}
+
+.mpb-md-show.mpb-md-effect-18 .mpb-md-content {
+    transform: rotateZ(0);
+    opacity: 1;
+}
+
+/* ── Effect 19: Slip from top ───────────────────── */
+.mpb-md-effect-19 .mpb-md-content {
+    transform: translateY(-200%);
+    opacity: 0;
+    transition: all 0.3s cubic-bezier(0.6, -0.28, 0.735, 0.045);
+}
+
+.mpb-md-show.mpb-md-effect-19 .mpb-md-content {
+    transform: translateY(0);
+    opacity: 1;
+}
+
+/* ── 3D Perspective Effects ─────────────────────── */
+html.mpb-md-perspective,
+html.mpb-md-perspective body {
+    height: 100%;
+    overflow: hidden;
+}
+
+html.mpb-md-perspective body {
+    perspective: 600px;
+}
+
+/* ── Responsive ─────────────────────────────────── */
+@media only screen and (max-width: 700px) {
+    .mpb-md-modal {
+        width: 80% !important;
+        max-width: 90% !important;
+    }
+
+    .mpb-md-content>h3 {
+        font-size: 1.5em !important;
+    }
+
+    .mpb-md-content>div {
+        font-size: 0.95em !important;
+    }
+}
+
+@media only screen and (max-width: 500px) {
+    .mpb-md-modal {
+        width: 90% !important;
+    }
+
+    .mpb-md-content>h3 {
+        font-size: 1.3em !important;
+    }
+}
+
+/* ── Reduced Motion ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+
+    .mpb-md-modal .mpb-md-content,
+    .mpb-md-effect-1 .mpb-md-content,
+    .mpb-md-effect-2 .mpb-md-content,
+    .mpb-md-effect-3 .mpb-md-content,
+    .mpb-md-effect-4 .mpb-md-content,
+    .mpb-md-effect-5 .mpb-md-content,
+    .mpb-md-effect-6 .mpb-md-content,
+    .mpb-md-effect-7 .mpb-md-content,
+    .mpb-md-effect-8 .mpb-md-content,
+    .mpb-md-effect-9 .mpb-md-content,
+    .mpb-md-effect-10 .mpb-md-content,
+    .mpb-md-effect-11 .mpb-md-content,
+    .mpb-md-effect-12 .mpb-md-content,
+    .mpb-md-effect-13 .mpb-md-content,
+    .mpb-md-effect-14 .mpb-md-content,
+    .mpb-md-effect-15 .mpb-md-content,
+    .mpb-md-effect-16 .mpb-md-content,
+    .mpb-md-effect-17 .mpb-md-content,
+    .mpb-md-effect-18 .mpb-md-content,
+    .mpb-md-effect-19 .mpb-md-content {
+        transition-duration: 0.01ms !important;
+        animation-duration: 0.01ms !important;
+    }
+}

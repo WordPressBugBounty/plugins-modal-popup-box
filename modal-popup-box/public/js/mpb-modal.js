@@ -12,15 +12,29 @@
     'use strict';
 
     /**
-     * Initialize all modals from the window.MPBModals config array.
+     * Initialize all modals by finding .mpb-modal-wrapper elements in the DOM.
+     * This bypasses the need for global window.MPBModals arrays and works better in FSE.
      */
     function initModals() {
-        if (typeof window.MPBModals === 'undefined' || !window.MPBModals.length) {
-            return;
-        }
+        $('.mpb-modal-wrapper').each(function () {
+            var $wrapper = $(this);
+            var configData = $wrapper.attr('data-mpb-config');
 
-        window.MPBModals.forEach(function (config) {
-            initSingleModal(config);
+            if (!configData) {
+                return;
+            }
+
+            try {
+                var config = JSON.parse(configData);
+
+                // ── DOM Detachment ──
+                // Move the wrapper to the document body to prevent theme clipping (FSE).
+                $wrapper.appendTo('body');
+
+                initSingleModal(config, $wrapper);
+            } catch (e) {
+                console.error('MPB: Invalid modal config', e);
+            }
         });
     }
 
@@ -28,12 +42,12 @@
      * Initialize a single modal instance.
      *
      * @param {Object} config - Modal configuration (id, showModal, animation).
+     * @param {jQuery} $wrapper - The specific wrapper element for this modal.
      */
-    function initSingleModal(config) {
+    function initSingleModal(config, $wrapper) {
         var id = config.id;
-        var $modal = $('#modal-' + id);
-        var $overlay = $('.mpb-md-overlay-' + id);
-        var $wrapper = $('#mpb-wrapper-' + id);
+        var $modal = $wrapper.find('#modal-' + id);
+        var $overlay = $wrapper.find('.mpb-md-overlay-' + id);
         var $triggers = $('[data-modal="modal-' + id + '"]');
 
         if (!$modal.length) {
@@ -42,7 +56,7 @@
 
         // ── On Button Click ─────────────────────────────
         if (config.showModal === 'onclick') {
-            $triggers.on('click keypress', function (e) {
+            $(document).on('click keypress', '[data-modal="modal-' + id + '"]', function (e) {
                 if (e.type === 'keypress' && e.which !== 13 && e.which !== 32) {
                     return;
                 }
@@ -56,37 +70,7 @@
             var delayMs = (config.delay || 0) * 1000;
 
             setTimeout(function () {
-                // Calculate scrollbar width BEFORE hiding it.
-                var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
-
-                // Lock scroll BEFORE animation starts.
-                $('html, body').addClass('mpb-modal-open');
-
-                // Compensate for removed scrollbar.
-                if (scrollbarWidth > 0) {
-                    document.documentElement.style.paddingRight = scrollbarWidth + 'px';
-                    document.body.style.paddingRight = scrollbarWidth + 'px';
-                }
-
-                // Show viewport wrapper.
-                $wrapper.addClass('mpb-wrapper-show');
-
-                // Make modal and overlay visible in initial animation state.
-                $modal.css({ display: 'block', visibility: 'visible' });
-                $overlay.show().css('z-index', '999');
-
-                // Double-rAF: ensures browser PAINTS initial state
-                // before adding md-show triggers CSS transition.
-                requestAnimationFrame(function () {
-                    requestAnimationFrame(function () {
-                        $modal.addClass('mpb-md-show');
-
-                        var anim = config.animation;
-                        if (anim === 'mpb-md-effect-17' || anim === 'mpb-md-effect-18' || anim === 'mpb-md-effect-19') {
-                            $('html').addClass('mpb-md-perspective');
-                        }
-                    });
-                });
+                openModal($modal, $overlay, $wrapper, config);
             }, delayMs);
         }
 
@@ -110,40 +94,32 @@
 
     /**
      * Open a modal.
-     *
-     * @param {jQuery} $modal   Modal element.
-     * @param {jQuery} $overlay Overlay element.
-     * @param {jQuery} $wrapper Wrapper element.
-     * @param {Object} config   Modal config.
      */
     function openModal($modal, $overlay, $wrapper, config) {
-        // Calculate scrollbar width BEFORE hiding it.
+        // Calculate scrollbar width
         var scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
 
-        // Lock scroll on both html and body.
+        // Lock scroll
         $('html, body').addClass('mpb-modal-open');
 
-        // Compensate for removed scrollbar to prevent content jump.
         if (scrollbarWidth > 0) {
             document.documentElement.style.paddingRight = scrollbarWidth + 'px';
             document.body.style.paddingRight = scrollbarWidth + 'px';
         }
 
-        // Show viewport wrapper.
-        if ($wrapper && $wrapper.length) {
-            $wrapper.addClass('mpb-wrapper-show');
-        }
-
-        // Make modal and overlay visible in initial animation state.
+        $wrapper.addClass('mpb-wrapper-show');
         $modal.css({ display: 'block', visibility: 'visible' });
         $overlay.show().css('z-index', '999');
 
-        // Double-rAF for smooth animation.
         requestAnimationFrame(function () {
             requestAnimationFrame(function () {
                 $modal.addClass('mpb-md-show');
 
-                // Focus first focusable element.
+                var anim = config.animation;
+                if (anim === 'mpb-md-effect-17' || anim === 'mpb-md-effect-18' || anim === 'mpb-md-effect-19') {
+                    $('html').addClass('mpb-md-perspective');
+                }
+
                 var $focusable = $modal.find('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
                 if ($focusable.length) {
                     $focusable.first().focus();
@@ -154,35 +130,25 @@
 
     /**
      * Close a modal.
-     *
-     * @param {jQuery} $modal    Modal element.
-     * @param {jQuery} $overlay  Overlay element.
-     * @param {jQuery} $triggers Trigger elements (for focus return).
-     * @param {number} id        Modal post ID.
      */
     function closeModal($modal, $overlay, $triggers, id) {
         $modal.removeClass('mpb-md-show');
         $('html').removeClass('mpb-md-perspective');
         $overlay.css('z-index', '0');
 
-        // Hide wrapper.
         var $wrapper = $modal.closest('.mpb-modal-wrapper');
         if ($wrapper.length) {
             $wrapper.removeClass('mpb-wrapper-show');
         }
 
-        // Remove scroll lock if no other modals are open.
         if (!$('.mpb-md-show').length) {
             $('html, body').removeClass('mpb-modal-open');
-            // Remove scrollbar compensation.
             document.documentElement.style.paddingRight = '';
             document.body.style.paddingRight = '';
         }
 
-        // Pause YouTube videos.
         pauseYouTubeVideo($modal);
 
-        // Return focus to trigger.
         if ($triggers && $triggers.length) {
             $triggers.first().focus();
         }
@@ -190,8 +156,6 @@
 
     /**
      * Pause any YouTube iframe inside the modal.
-     *
-     * @param {jQuery} $modal Modal element.
      */
     function pauseYouTubeVideo($modal) {
         $modal.find('iframe').each(function () {
@@ -202,9 +166,7 @@
                         JSON.stringify({ event: 'command', func: 'pauseVideo', args: '' }),
                         '*'
                     );
-                } catch (e) {
-                    // cross-origin error
-                }
+                } catch (e) {}
             }
         });
     }

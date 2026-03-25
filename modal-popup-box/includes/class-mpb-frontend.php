@@ -121,9 +121,17 @@ class MPB_Frontend
         $btn_class = ('color_1' === $design) ? 'btn-style' : 'btn-primary_' . $post_id;
         $close_btn_class = 'btn-close-bg-' . $post_id;
 
+        // Prepare configuration.
+        $config = array(
+            'id' => $post_id,
+            'showModal' => $show_modal,
+            'animation' => $animation,
+            'delay' => isset($settings['mpb_open_delay']) ? absint($settings['mpb_open_delay']) : 0,
+        );
+
         // Render modal HTML.
         ?>
-        <div class="mpb-modal-wrapper" id="mpb-wrapper-<?php echo esc_attr($post_id); ?>">
+        <div class="mpb-modal-wrapper" id="mpb-wrapper-<?php echo esc_attr($post_id); ?>" data-mpb-config="<?php echo esc_attr(wp_json_encode($config)); ?>">
             <div class="mpb-md-modal mpb-modal-<?php echo esc_attr($post_id); ?> <?php echo esc_attr($animation); ?>"
                 id="modal-<?php echo esc_attr($post_id); ?>" role="dialog" aria-modal="true"
                 aria-labelledby="mpb-title-<?php echo esc_attr($post_id); ?>" <?php if ('onclick' === $show_modal): ?>
@@ -179,22 +187,13 @@ class MPB_Frontend
         <?php endif; ?>
         <?php
 
-        // Pass configuration via wp_add_inline_script.
-        $config_js = sprintf(
-            '(function(){if(typeof window.MPBModals==="undefined")window.MPBModals=[];window.MPBModals.push(%s);})();',
-            wp_json_encode(array(
-                'id' => $post_id,
-                'showModal' => $show_modal,
-                'animation' => $animation,
-                'delay' => isset($settings['mpb_open_delay']) ? absint($settings['mpb_open_delay']) : 0,
-            ))
-        );
-
-        wp_add_inline_script('mpb-modal-js', $config_js, 'before');
-
-        // Add dynamic CSS via wp_add_inline_style instead of raw <style> tag.
+        // Modern FSE-friendly dynamic style injection.
         $dynamic_css = $this->get_dynamic_css($post_id, $settings);
-        wp_add_inline_style('mpb-frontend-css', $dynamic_css);
+        ?>
+        <style id="mpb-style-<?php echo esc_attr($post_id); ?>">
+            <?php echo $dynamic_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+        </style>
+        <?php
     }
 
     /**

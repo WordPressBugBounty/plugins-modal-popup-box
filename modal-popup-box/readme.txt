@@ -5,7 +5,7 @@ Tags: popup builder, modal popup, pop up box, responsive popups, popup maker
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.0.1
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -107,6 +107,14 @@ Upgrade to the premium version for advanced features:
 6.  Filterable Portfolio Gallery in a Pop Up Box
 
 == Changelog ==
+
+= 2.1.0 =
+* Fix: Implemented full compatibility with WordPress Block Themes (FSE) like Twenty Twenty-Five.
+
+= 2.0.2 =
+* Enhancement: Migrated configuration delivery from inline scripts to HTML data-attributes for better reliability in block-based rendering.
+* Enhancement: Replaced `wp_add_inline_style()` with native HTML5 `<style>` block injection to ensure per-modal styling renders reliably in FSE themes.
+* Enhancement: Refactored JavaScript to automatically detach modal wrappers and append them to the document body, preventing CSS clipping from theme stacking contexts.
 
 = 2.0.1 =
 * Security: Implemented granular data sanitization for admin settings and AJAX imports.
@@ -216,6 +224,9 @@ Upgrade to the premium version for advanced features:
 * Tested for WordPress 5.9
 
 == Upgrade Notice ==
+
+= 2.1.0 =
+Major update: Implemented full compatibility with WordPress Block Themes (FSE) and Twenty Twenty-Five.
 
 = 2.0.1 =
 Minor update: Removed specific animation effects (Newspaper, Sticky Up, 3D Sign) from the settings UI.

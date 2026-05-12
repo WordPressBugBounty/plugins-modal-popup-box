@@ -1,77 +1,82 @@
-=== Modal Popup Box ===
+=== Modal Popup Box — Popup Maker & Popup Builder ===
 Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkhan007, sharikkhan007, zishlife, FARAZFRANK
 Donate link: https://paypal.me/awplife
-Tags: popup builder, modal popup, pop up box, responsive popups, popup maker
+Tags: popup builder, popup maker, offer, news, pop up box
 Requires at least: 5.0
 Tested up to: 6.9
 Requires PHP: 7.4
-Stable tag: 2.1.0
+Stable tag: 2.1.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
-Create and manage customizable modal popup boxes with CSS animations. Embed images, videos, forms, shortcodes, and more.
+A fast popup maker to show news, offer, videos, forms, and more. Easily create an amazing popup and modal boxes.
 
 == Description ==
 
-Modal Popup Box provides an easy way to add versatile popup boxes to your WordPress website. Display announcements, capture leads, showcase products, or embed any content inside a beautifully animated modal.
+Make easy popup boxes on your WordPress site. Show important news, run an offer, or capture new leads. This popup builder places content in a nice modal.
 
-= Free Version Features =
+Create a custom popup maker fast. It uses simple CSS settings. Show images, videos, shortcodes, and more. It is fully responsive on all devices.
+
+### Smart Popup Maker for News and Sales
+
+Use this popup builder to keep readers on your site. Drive attention to a new special offer. Share urgent news updates fast. 
+
+### Key Free Features for Your Offer Popup
 
 *   **Two Trigger Modes** — Open on page load or on button click.
-*   **Open Delay Timer** — Set a delay (0–60 seconds) before the modal appears on page load.
-*   **5 Color Presets** — Blue, Red, Green, Purple, and Orange design themes.
-*   **4 Animation Effects** — Fade & Scale, Slide Right, Side Fall, and 3D Flip.
-*   **Overlay Opacity Control** — Adjust background dimming from 0% to 100%.
-*   **Customizable Button** — Control trigger button text, size, and colors.
-*   **Shortcode Support** — Place modals anywhere with a simple shortcode.
-*   **Custom CSS** — Add your own styles for full design control.
-*   **Responsive Design** — Modals look great on all screen sizes.
-*   **Embed Anything** — Images, YouTube/Vimeo videos, Contact Form 7, sliders, galleries, and content from any shortcode-based plugin.
-*   **Modern Admin Dashboard** — Clean, tabbed settings interface.
+*   **Open Delay Timer** — Set a delay before the popup appears on screen.
+*   **5 Color Presets** — Pick blue, red, green, purple, or orange themes.
+*   **4 Animation Effects** — Fade & Scale, Slide, Side Fall, and 3D Flip.
+*   **Overlay Opacity** — Soften background dimming from 0% to 100%.
+*   **Edit Button Text** — Change popup button text, size, and color fast.
+*   **Shortcode Maker** — Place your modal popup anywhere with one code.
+*   **Mobile Ready** — Your popup looks good on any screen size.
+*   **Embed Items** — Show forms, videos, and grids inside the popup maker.
+*   **Easy Admin** — Simple settings panel built for normal users.
 
-= Embed Any Content =
+### Add Any Item to Your Popup Builder
 
-*   **Media:** Images, galleries, and sliders.
-*   **Videos:** YouTube and Vimeo embeds.
-*   **Forms:** Contact Form 7 and other form plugins.
-*   **Promotions:** Coupon codes, discounts, and announcements.
-*   **Social Media:** Facebook, Twitter, and Instagram feeds.
-*   **Plugin Content:** Anything with a shortcode.
+*   **Media:** Rich images, smart galleries, and sliders.
+*   **Videos:** Embed YouTube and Vimeo clips with ease.
+*   **Forms:** Load Contact Form 7 and other form tools.
+*   **Promotions:** Share a unique coupon, sale, or offer.
+*   **Social Data:** Connect Facebook, Twitter, or social streams.
+*   **News Feeds:** Highlight latest news to visitors right away.
 
-== How To Use Free Modal Popup Plugin? ==
+== How To Use This Free Popup Builder? ==
 
 https://www.youtube.com/watch?v=jbYiZNe6kr4
 
 == Installation ==
 
-1.  Install "Modal Popup Box" from the WordPress plugin directory or upload the plugin files.
-2.  Activate the plugin.
-3.  Go to **Modal Popup Box → Add New Modal Popup Box** in your dashboard.
-4.  Add your content using the WordPress editor, configure your settings, and publish.
-5.  Copy the generated shortcode and paste it into any page, post, or widget.
+1.  Install "Modal Popup Box" from the plugin store.
+2.  Click Activate.
+3.  Go to **Modal Popup Box → Add New** on the side menu.
+4.  Enter news or offer text in the editor.
+5.  Copy your popup code and paste it to a live page.
 
 == Frequently Asked Questions ==
 
-= How do I create a modal popup? =
-Navigate to **Modal Popup Box → Add New Modal Popup Box**, enter your content, configure the trigger and design settings, then publish.
+= How do I make a new popup builder item? =
+Go to **Modal Popup Box → Add New**. Add text, pick colors, set your trigger, and hit publish.
 
-= Can I show the modal automatically on page load? =
-Yes. In the **Modal Popup** tab, select "On Page Load" as the trigger. You can also set a delay timer in the **Config** tab.
+= Can I show a special offer popup on load? =
+Yes. Go to the **Modal Popup** tab and click "On Page Load". It will fire when the page loads.
 
-= Can I control the overlay darkness? =
-Yes. The **Overlay Opacity** slider in the **Config** tab lets you adjust from fully transparent (0%) to fully opaque (100%).
+= Is this popup maker good for breaking news? =
+Yes. You can edit text fast to share new news or an offer right when users enter.
 
-= Does the free version include animations? =
-Yes. The free version includes 4 animation effects. The premium version unlocks all 19.
+= Does the free popup builder limit animations? =
+The free tool has 4 effects. Upgrading unlocks 15 more styles.
 
-= Can I embed Contact Form 7 inside a modal? =
-Yes. Simply paste the Contact Form 7 shortcode into the modal content editor.
+= Can I embed a form inside my offer popup? =
+Yes. Just copy the form shortcode and paste it right into the popup maker editor.
 
-= Does it work with page builders? =
-Yes. Use the shortcode in any page builder that supports shortcodes (Elementor, Beaver Builder, Divi, etc.).
+= Will the popup builder work with Elementor? =
+Yes. Use the shortcode in any page builder like Divi or Elementor.
 
-**Have more questions?**
-Visit the [support forum](https://wordpress.org/support/plugin/modal-popup-box/) for help.
+**Still need help with your popup maker?**
+Visit the [support forum](https://wordpress.org/support/plugin/modal-popup-box/) for real human support.
 
 == Premium Version & Demos ==
 
@@ -107,6 +112,14 @@ Upgrade to the premium version for advanced features:
 6.  Filterable Portfolio Gallery in a Pop Up Box
 
 == Changelog ==
+
+= 2.1.1 =
+* Date: 12 May, 2026
+* Feature: Integrated high-definition in-dashboard Documentation & Tutorial guide.
+* Feature: Added standalone "Our Plugins" & "Our Themes" showcases for broader ecosystem access.
+* Enhancement: Modularized logic architecture to isolate settings and doc handlers for cleaner codebase.
+* Enhancement: Optimized SEO readability standards across descriptions and saturated key terms (Popup Builder/Maker).
+* Security: Completely excised redundant custom CSS inputs in compliance with hardened WordPress.org guidelines.
 
 = 2.1.0 =
 * Fix: Implemented full compatibility with WordPress Block Themes (FSE) like Twenty Twenty-Five.
@@ -160,26 +173,14 @@ Upgrade to the premium version for advanced features:
 = 1.6.0 =
 * Testing plugin for WordPress 6.8.1
 
-= 1.5.9 =
-* Testing plugin for WordPress 6.7.2
-
-= 1.5.8 =
-* Testing plugin for WordPress 6.7.1
-
 = 1.5.7 =
 * WordPress security issues fixed
-* Testing plugin for WordPress 6.6.2
-
-= 1.5.6 =
 * Testing plugin for WordPress 6.6.2
 
 = 1.5.5 =
 * Testing plugin for WordPress 6.5.5
 * Hide/show fixed on settings page
 * Admin demo link fixed
-
-= 1.5.4 =
-* Testing plugin for WordPress 6.5.4
 
 = 1.5.3 =
 * WordPress security issues fixed
@@ -189,46 +190,10 @@ Upgrade to the premium version for advanced features:
 * Bug Fix
 * Testing plugin for WordPress 6.4.3
 
-= 1.5.1 =
-* Bug Fix
-* Testing plugin for WordPress 6.4.2
-
-= 1.5.0 =
-* Bug Fix
-* Testing plugin for WordPress 6.4.2
-
-= 1.4.9 =
-* Tested on WordPress 6.3.2
-
-= 1.4.8 =
-* Tested on WordPress 6.3.1
-
-= 1.4.7 =
-* Tested on WordPress 6.2.2
-
-= 1.4.5 =
-* Tested on WordPress 6.1.1
-
-= 1.4.3 =
-* Coding bugs fixed
-* Tested on WordPress 6.0.3
-
-= 1.4.2 =
-* Tested for WordPress 6.0.1
-
-= 1.4.1 =
-* Tested for WordPress 5.9.3
-
-= 1.4.0 =
-* Disable Bootstrap CSS option added
-* Tested for WordPress 5.9
-
 == Upgrade Notice ==
+
+= 2.1.1 =
+Minor Maintenance: Overhauled internal onboarding guide, sanitized redundant input vectors, and integrated unified ecosystem submenus.
 
 = 2.1.0 =
 Major update: Implemented full compatibility with WordPress Block Themes (FSE) and Twenty Twenty-Five.
-
-= 2.0.1 =
-Minor update: Removed specific animation effects (Newspaper, Sticky Up, 3D Sign) from the settings UI.
-
-= 2.0.0 =

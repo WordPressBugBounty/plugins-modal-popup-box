@@ -121,6 +121,10 @@ class MPB_Frontend
         $btn_class = ('color_1' === $design) ? 'btn-style' : 'btn-primary_' . $post_id;
         $close_btn_class = 'btn-close-bg-' . $post_id;
 
+        // Inject dynamic CSS via core WordPress enqueue handler.
+        $dynamic_css = $this->get_dynamic_css($post_id, $settings);
+        wp_add_inline_style('mpb-frontend-css', $dynamic_css);
+
         // Prepare configuration.
         $config = array(
             'id' => $post_id,
@@ -187,13 +191,7 @@ class MPB_Frontend
         <?php endif; ?>
         <?php
 
-        // Modern FSE-friendly dynamic style injection.
-        $dynamic_css = $this->get_dynamic_css($post_id, $settings);
-        ?>
-        <style id="mpb-style-<?php echo esc_attr($post_id); ?>">
-            <?php echo $dynamic_css; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
-        </style>
-        <?php
+        // Style injection completed via wp_add_inline_style.
     }
 
     /**
@@ -213,6 +211,7 @@ class MPB_Frontend
         $close_icon_color = isset($settings['mpb_close_icon_color']) ? sanitize_hex_color($settings['mpb_close_icon_color']) : '#333';
         $close_btn_color = isset($settings['mpb_button2_color']) ? sanitize_hex_color($settings['mpb_button2_color']) : '#ddd';
         $close_btn_txt = isset($settings['mpb_button2_text_color']) ? sanitize_hex_color($settings['mpb_button2_text_color']) : '#333';
+        $close_btn_bg_color = isset($settings['mpb_close_btn_bg_color']) ? sanitize_hex_color($settings['mpb_close_btn_bg_color']) : 'transparent';
 
         $css = "
             .mpb-modal-{$post_id} {
@@ -245,7 +244,7 @@ class MPB_Frontend
                 position: absolute;
                 top: 10px;
                 right: 14px;
-                background-color: {$settings['mpb_close_btn_bg_color']} !important;
+                background-color: {$close_btn_bg_color} !important;
                 border: none;
                 font-size: 22px;
                 cursor: pointer;
@@ -259,7 +258,7 @@ class MPB_Frontend
             }
             .mpb-close-x:hover {
                 opacity: 1;
-                background-color: {$settings['mpb_close_btn_bg_color']} !important;
+                background-color: {$close_btn_bg_color} !important;
                 border-color: {$close_icon_color} !important;
             }
             #mpb-wrapper-{$post_id} .mpb-md-overlay {

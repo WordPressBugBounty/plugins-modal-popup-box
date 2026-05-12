@@ -24,7 +24,6 @@ class MPB_Shortcode
     public function init()
     {
         add_shortcode('MPBOX', array($this, 'render'));
-        add_filter('widget_text', 'do_shortcode');
     }
 
     /**

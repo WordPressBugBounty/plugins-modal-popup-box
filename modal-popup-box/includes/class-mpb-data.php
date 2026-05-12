@@ -43,8 +43,6 @@ class MPB_Data
 			'mpb_close_icon_color' => '#666666',
 			'mpb_width' => '35',
 			'mpb_height' => '350',
-			'mpb_bt_ds' => 'true',
-			'mpb_custom_css' => '',
 			'mpb_open_delay' => '0',
 			'mpb_overlay_opacity' => '60',
 			'mpb_modal_bg_color' => '#008EC2',
@@ -87,6 +85,11 @@ class MPB_Data
 		if (empty($raw_data)) {
 			return array();
 		}
+		
+		// Handle Native Array (new standardized format).
+		if (is_array($raw_data)) {
+			return $raw_data;
+		}
 
 		// Try JSON first (current format).
 		$settings = json_decode($raw_data, true);
@@ -100,7 +103,7 @@ class MPB_Data
 			// Try JSON on decoded data.
 			$settings = json_decode($decoded, true);
 			if (is_array($settings)) {
-				update_post_meta($post_id, $meta_key, wp_json_encode($settings));
+				update_post_meta($post_id, $meta_key, $settings);
 				return $settings;
 			}
 
@@ -108,7 +111,7 @@ class MPB_Data
 			if (0 === strpos($decoded, 'a:')) {
 				$settings = self::safe_parse_serialized($decoded);
 				if (!empty($settings)) {
-					update_post_meta($post_id, $meta_key, wp_json_encode($settings));
+					update_post_meta($post_id, $meta_key, $settings);
 					return $settings;
 				}
 			}
@@ -127,7 +130,7 @@ class MPB_Data
 	{
 		$post_id = absint($post_id);
 		$meta_key = 'awl_mpb_settings_' . $post_id;
-		update_post_meta($post_id, $meta_key, wp_json_encode($settings));
+		update_post_meta($post_id, $meta_key, $settings);
 	}
 
 	/**

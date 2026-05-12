@@ -39,10 +39,6 @@ class MPB_Settings
                     <span class="dashicons dashicons-admin-generic"></span>
                     <?php esc_html_e('Config', 'modal-popup-box'); ?>
                 </a>
-                <a href="#mpb-tab-css" class="nav-tab">
-                    <span class="dashicons dashicons-editor-code"></span>
-                    <?php esc_html_e('Custom CSS', 'modal-popup-box'); ?>
-                </a>
                 <a href="#mpb-tab-upgrade" class="nav-tab">
                     <span class="dashicons dashicons-cart"></span>
                     <?php esc_html_e('Upgrade to Pro', 'modal-popup-box'); ?>
@@ -53,7 +49,6 @@ class MPB_Settings
                 <?php
                 $this->render_tab_trigger($settings);
                 $this->render_tab_config($settings);
-                $this->render_tab_css($settings);
                 $this->render_tab_upgrade();
                 ?>
             </div>
@@ -399,39 +394,6 @@ class MPB_Settings
         <?php
     }
 
-    /**
-     * Render Custom CSS tab.
-     *
-     * @param array $settings Current settings.
-     */
-    private function render_tab_css($settings)
-    {
-        ?>
-        <div id="mpb-tab-css" class="mpb-tab-panel">
-            <h2 class="mpb-section-header">
-                <span class="dashicons dashicons-editor-code"></span>
-                <?php esc_html_e('Custom CSS', 'modal-popup-box'); ?>
-            </h2>
-            <hr class="mpb-section-divider">
-            <table class="form-table mpb-settings-table">
-                <tr>
-                    <th scope="row">
-                        <label for="mpb_custom_css">
-                            <?php esc_html_e('Custom CSS', 'modal-popup-box'); ?>
-                        </label>
-                        <p class="description">
-                            <?php esc_html_e('Add your own CSS rules. Do not use &lt;style&gt; tags.', 'modal-popup-box'); ?>
-                        </p>
-                    </th>
-                    <td>
-                        <textarea name="mpb_custom_css" id="mpb_custom_css" rows="10" class="large-text code"
-                            placeholder="<?php esc_attr_e('.my-modal { color: #333; }', 'modal-popup-box'); ?>"><?php echo esc_textarea($settings['mpb_custom_css']); ?></textarea>
-                    </td>
-                </tr>
-            </table>
-        </div>
-        <?php
-    }
 
     /**
      * Render Upgrade to Pro tab.

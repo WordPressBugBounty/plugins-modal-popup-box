@@ -24,6 +24,7 @@ class MPB_Admin
     public function init()
     {
         add_action('init', array($this, 'register_post_type'));
+        add_action('admin_menu', array($this, 'add_docs_submenu'));
         add_action('add_meta_boxes', array($this, 'add_meta_boxes'));
         add_action('save_post', array($this, 'save_settings'));
         add_filter('manage_modalpopupbox_posts_columns', array($this, 'add_shortcode_column'));
@@ -56,21 +57,54 @@ class MPB_Admin
         $args = array(
             'labels' => $labels,
             'description' => __('Modal Popup Box', 'modal-popup-box'),
-            'public' => true,
-            'publicly_queryable' => true,
+            'public' => false,
+            'publicly_queryable' => false,
             'show_ui' => true,
             'show_in_menu' => true,
-            'query_var' => true,
-            'rewrite' => array('slug' => 'modalpopupbox'),
+            'query_var' => false,
+            'rewrite' => false,
             'capability_type' => 'page',
             'menu_icon' => 'dashicons-archive',
-            'has_archive' => true,
+            'has_archive' => false,
             'hierarchical' => false,
             'menu_position' => null,
             'supports' => array('title', 'editor'),
         );
 
         register_post_type('modalpopupbox', $args);
+    }
+
+    /**
+     * Register Submenu Pages.
+     */
+    public function add_docs_submenu()
+    {
+        add_submenu_page(
+            'edit.php?post_type=modalpopupbox',
+            __('How to Use', 'modal-popup-box'),
+            __('How to Use', 'modal-popup-box'),
+            'manage_options',
+            'mpb-docs',
+            array($this, 'render_docs_page')
+        );
+
+        add_submenu_page(
+            'edit.php?post_type=modalpopupbox',
+            __('Our Plugins', 'modal-popup-box'),
+            __('Our Plugins', 'modal-popup-box'),
+            'manage_options',
+            'mpb-plugins',
+            array($this, 'render_our_plugins_page')
+        );
+
+        add_submenu_page(
+            'edit.php?post_type=modalpopupbox',
+            __('Our Themes', 'modal-popup-box'),
+            __('Our Themes', 'modal-popup-box'),
+            'manage_options',
+            'mpb-themes',
+            array($this, 'render_our_themes_page')
+        );
     }
 
     /**
@@ -220,8 +254,23 @@ class MPB_Admin
     {
         $screen = get_current_screen();
 
-        if (!$screen || 'modalpopupbox' !== $screen->post_type) {
+        $is_cpt_screen = $screen && 'modalpopupbox' === $screen->post_type;
+        $is_docs_screen = strpos($hook_suffix, 'mpb-docs') !== false;
+        $is_plugins_screen = strpos($hook_suffix, 'mpb-plugins') !== false;
+        $is_themes_screen = strpos($hook_suffix, 'mpb-themes') !== false;
+
+        if (!$is_cpt_screen && !$is_docs_screen && !$is_plugins_screen && !$is_themes_screen) {
             return;
+        }
+
+        // Enqueue specific Ecosystem Styles if loading the dedicated library pages
+        if ($is_plugins_screen || $is_themes_screen) {
+            wp_enqueue_style(
+                'mpb-our-plugins-style',
+                MPB_PLUGIN_URL . 'admin/css/our-plugins-style.css',
+                array(),
+                MPB_PLUGIN_VER
+            );
         }
 
         // Admin CSS.
@@ -245,5 +294,36 @@ class MPB_Admin
         wp_localize_script('mpb-admin-js', 'mpb_admin_vars', array(
             'copied_text' => __('Copied!', 'modal-popup-box'),
         ));
+    }
+
+    /**
+     * Render the documentation / how to use page.
+     */
+    public function render_docs_page()
+    {
+        $docs_renderer = new MPB_Docs();
+        $docs_renderer->render();
+    }
+
+    /**
+     * Render the our plugins library submenu view.
+     */
+    public function render_our_plugins_page()
+    {
+        $file = MPB_PLUGIN_DIR . 'includes/our-plugins.php';
+        if (file_exists($file)) {
+            require_once $file;
+        }
+    }
+
+    /**
+     * Render the our themes library submenu view.
+     */
+    public function render_our_themes_page()
+    {
+        $file = MPB_PLUGIN_DIR . 'includes/our-themes.php';
+        if (file_exists($file)) {
+            require_once $file;
+        }
     }
 }

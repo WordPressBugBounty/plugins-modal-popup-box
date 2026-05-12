@@ -126,8 +126,6 @@
             }
         }
 
-        // ── Hide slug editor ────────────────────────────
-        $('#edit-slug-box').hide();
     });
 
 })(jQuery);

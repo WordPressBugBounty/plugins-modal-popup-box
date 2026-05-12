@@ -1,10 +1,10 @@
 <?php
 
 /**
- * Plugin Name: Modal Popup Box New
+ * Plugin Name: Modal Popup Box
  * Plugin URI:  https://awplife.com/wordpress-plugins/modal-popup-box-premium/
  * Description: Create customizable modal popup boxes with CSS animations. Embed images, videos, forms, shortcodes, and more.
- * Version:     2.1.0
+ * Version:     2.1.1
  * Author:      A WP Life
  * Author URI:  https://awplife.com/
  * License:     GPLv2 or later
@@ -26,7 +26,7 @@ if (defined('MPB_PLUGIN_VER')) {
 }
 
 // ── Plugin Constants ────────────────────────────────
-define('MPB_PLUGIN_VER', '2.1.0');
+define('MPB_PLUGIN_VER', '2.1.1');
 define('MPB_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('MPB_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('MPB_PLUGIN_SLUG', 'modalpopupbox');

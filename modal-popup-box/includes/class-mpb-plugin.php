@@ -59,6 +59,7 @@ class MPB_Plugin
         require_once $includes_dir . 'class-mpb-data.php';
         require_once $includes_dir . 'class-mpb-admin.php';
         require_once $includes_dir . 'class-mpb-settings.php';
+        require_once $includes_dir . 'class-mpb-docs.php';
         require_once $includes_dir . 'class-mpb-shortcode.php';
         require_once $includes_dir . 'class-mpb-frontend.php';
     }

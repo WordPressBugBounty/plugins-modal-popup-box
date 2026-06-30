@@ -3,9 +3,9 @@ Contributors: awordpresslife, razipathhan, hanif0991, muhammadshahid, fkfaisalkh
 Donate link: https://paypal.me/awplife
 Tags: popup builder, popup maker, offer, news, pop up box
 Requires at least: 5.0
-Tested up to: 6.9
+Tested up to: 7.0
 Requires PHP: 7.4
-Stable tag: 2.1.1
+Stable tag: 2.1.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -113,6 +113,12 @@ Upgrade to the premium version for advanced features:
 
 == Changelog ==
 
+= 2.1.2 =
+* Date: 30 June, 2026
+* Fixed: Abrupt exit transitions by adding a 300ms closing delay to allow CSS transitions and overlay fades to play smoothly.
+* Fixed: Style loss and overrides when multiple shortcodes are rendered concurrently or stylesheet is printed in the head early by utilizing unique style handles.
+* Enhancement: Namespaced close button, body, and button padding rules to target individual modal IDs and prevent cross-modal styling conflicts.
+
 = 2.1.1 =
 * Date: 12 May, 2026
 * Feature: Integrated high-definition in-dashboard Documentation & Tutorial guide.
@@ -191,6 +197,9 @@ Upgrade to the premium version for advanced features:
 * Testing plugin for WordPress 6.4.3
 
 == Upgrade Notice ==
+
+= 2.1.2 =
+Fixed styling conflicts, resolved style loss for multiple modals, and implemented smooth modal exit transitions.
 
 = 2.1.1 =
 Minor Maintenance: Overhauled internal onboarding guide, sanitized redundant input vectors, and integrated unified ecosystem submenus.

@@ -132,20 +132,27 @@
      * Close a modal.
      */
     function closeModal($modal, $overlay, $triggers, id) {
+        if (!$modal.hasClass('mpb-md-show')) {
+            return;
+        }
+
         $modal.removeClass('mpb-md-show');
         $('html').removeClass('mpb-md-perspective');
-        $overlay.css('z-index', '0');
 
-        var $wrapper = $modal.closest('.mpb-modal-wrapper');
-        if ($wrapper.length) {
-            $wrapper.removeClass('mpb-wrapper-show');
-        }
+        setTimeout(function () {
+            $overlay.css('z-index', '0');
 
-        if (!$('.mpb-md-show').length) {
-            $('html, body').removeClass('mpb-modal-open');
-            document.documentElement.style.paddingRight = '';
-            document.body.style.paddingRight = '';
-        }
+            var $wrapper = $modal.closest('.mpb-modal-wrapper');
+            if ($wrapper.length) {
+                $wrapper.removeClass('mpb-wrapper-show');
+            }
+
+            if (!$('.mpb-md-show').length) {
+                $('html, body').removeClass('mpb-modal-open');
+                document.documentElement.style.paddingRight = '';
+                document.body.style.paddingRight = '';
+            }
+        }, 300); // 300ms matches the 0.3s transition duration in CSS
 
         pauseYouTubeVideo($modal);
 

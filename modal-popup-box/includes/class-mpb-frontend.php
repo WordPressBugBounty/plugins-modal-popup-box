@@ -121,9 +121,12 @@ class MPB_Frontend
         $btn_class = ('color_1' === $design) ? 'btn-style' : 'btn-primary_' . $post_id;
         $close_btn_class = 'btn-close-bg-' . $post_id;
 
-        // Inject dynamic CSS via core WordPress enqueue handler.
+        // Inject dynamic CSS via a unique handle to ensure it works with multiple modals on the same page.
         $dynamic_css = $this->get_dynamic_css($post_id, $settings);
-        wp_add_inline_style('mpb-frontend-css', $dynamic_css);
+        $dynamic_handle = 'mpb-dynamic-style-' . $post_id;
+        wp_register_style($dynamic_handle, false);
+        wp_enqueue_style($dynamic_handle);
+        wp_add_inline_style($dynamic_handle, $dynamic_css);
 
         // Prepare configuration.
         $config = array(
@@ -240,7 +243,7 @@ class MPB_Frontend
             .btn-close-bg-{$post_id}:hover {
                 opacity: 0.9;
             }
-            .mpb-close-x {
+            .mpb-modal-{$post_id} .mpb-close-x {
                 position: absolute;
                 top: 10px;
                 right: 14px;
@@ -256,7 +259,7 @@ class MPB_Frontend
                 border: 1px solid transparent;
                 border-radius: 4px;
             }
-            .mpb-close-x:hover {
+            .mpb-modal-{$post_id} .mpb-close-x:hover {
                 opacity: 1;
                 background-color: {$close_btn_bg_color} !important;
                 border-color: {$close_icon_color} !important;
@@ -264,10 +267,10 @@ class MPB_Frontend
             #mpb-wrapper-{$post_id} .mpb-md-overlay {
                 background: rgba(0, 0, 0, 0.7) !important;
             }
-            .mpb-content-body {
+            .mpb-modal-{$post_id} .mpb-content-body {
                 padding: 15px;
             }
-            .mpb-buttons {
+            .mpb-modal-{$post_id} .mpb-buttons {
                 padding: 10px 15px 15px;
             }
             .mpb-trigger-wrap {

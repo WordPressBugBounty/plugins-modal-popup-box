@@ -826,3 +826,37 @@
 	color: #4b5563;
 	line-height: 1.5;
 }
+
+/* ── Shortcode Copy Utility Classes ───────────────── */
+.mpb-shortcode-input {
+	font-size: 16px;
+	text-align: center;
+	padding: 8px;
+	border: 2px dashed #ccc;
+	font-weight: bold;
+}
+
+.mpb-copy-actions {
+	margin-top: 8px;
+}
+
+.mpb-icon-inline {
+	vertical-align: middle;
+	margin-right: 4px;
+}
+
+.mpb-copy-success-msg {
+	display: none;
+	color: #46b450;
+	margin-left: 8px;
+	font-weight: bold;
+}
+
+.mpb-column-shortcode-field {
+	font-weight: bold;
+	background-color: #32373c;
+	color: #fff;
+	text-align: center;
+	width: 160px;
+	padding: 4px 8px;
+}

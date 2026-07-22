@@ -126,6 +126,21 @@
             }
         }
 
+        // ── Ecosystem Plugin Filtering ──────────────────
+        $('.ig-filter-btn').on('click', function () {
+            var filter = $(this).data('filter');
+
+            $('.ig-filter-btn').removeClass('active');
+            $(this).addClass('active');
+
+            if (filter === 'all') {
+                $('.ig-plugin-card').fadeIn(300);
+            } else {
+                $('.ig-plugin-card').hide();
+                $('.cat-' + filter).fadeIn(300);
+            }
+        });
+
     });
 
 })(jQuery);

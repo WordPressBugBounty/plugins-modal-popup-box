@@ -150,11 +150,11 @@ class MPB_Data
 			return $result;
 		}
 
-		// Extract string key => string value pairs.
-		$pattern = '/s:\d+:"([^"]+)";s:\d+:"([^"]*)";/';
+		// Extract string key => string value pairs (handling escaped quotes).
+		$pattern = '/s:\d+:"([^"]+)";s:\d+:"((?:[^"\\\\]|\\\\.)*)";/';
 		if (preg_match_all($pattern, $serialized, $matches, PREG_SET_ORDER)) {
 			foreach ($matches as $match) {
-				$result[sanitize_text_field($match[1])] = sanitize_text_field($match[2]);
+				$result[sanitize_text_field($match[1])] = sanitize_text_field(stripslashes($match[2]));
 			}
 		}
 

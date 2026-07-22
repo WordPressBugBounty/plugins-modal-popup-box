@@ -136,19 +136,23 @@ class MPB_Admin
      *
      * @param WP_Post $post Current post object.
      */
+    /**
+     * Render the shortcode copy metabox.
+     *
+     * @param WP_Post $post Current post object.
+     */
     public function render_shortcode_metabox($post)
     {
         $shortcode = '[MPBOX id=' . absint($post->ID) . ']';
         ?>
         <div class="mpb-shortcode-wrap">
-            <input type="text" id="mpb-shortcode-input" value="<?php echo esc_attr($shortcode); ?>" readonly class="widefat"
-                style="font-size: 16px; text-align: center; padding: 8px; border: 2px dashed #ccc; font-weight: bold;">
-            <p style="margin-top: 8px;">
+            <input type="text" id="mpb-shortcode-input" value="<?php echo esc_attr($shortcode); ?>" readonly class="widefat mpb-shortcode-input">
+            <p class="mpb-copy-actions">
                 <button type="button" class="button button-primary mpb-copy-shortcode" data-target="#mpb-shortcode-input">
-                    <span class="dashicons dashicons-clipboard" style="vertical-align: middle; margin-right: 4px;"></span>
+                    <span class="dashicons dashicons-clipboard mpb-icon-inline"></span>
                     <?php esc_html_e('Copy Shortcode', 'modal-popup-box'); ?>
                 </button>
-                <span class="mpb-copy-success" style="display:none; color: #46b450; margin-left: 8px; font-weight: bold;">
+                <span class="mpb-copy-success mpb-copy-success-msg">
                     <?php esc_html_e('Copied!', 'modal-popup-box'); ?>
                 </span>
             </p>
@@ -234,13 +238,18 @@ class MPB_Admin
             return;
         }
 
-        $shortcode = '[MPBOX id=' . absint($post_id) . ']';
+        $post_id = absint($post_id);
+        $target_id = 'mpb-column-shortcode-' . $post_id;
+        $shortcode = '[MPBOX id=' . $post_id . ']';
+
         printf(
-            '<input type="text" value="%s" readonly class="mpb-column-shortcode" style="font-weight:bold; background-color:#32373C; color:#fff; text-align:center; width: 160px; padding: 4px 8px;" />',
+            '<input type="text" id="%1$s" value="%2$s" readonly class="mpb-column-shortcode mpb-column-shortcode-field" />',
+            esc_attr($target_id),
             esc_attr($shortcode)
         );
         printf(
-            '<button type="button" class="button button-small mpb-copy-shortcode" data-target=".mpb-column-shortcode" style="margin-left:4px;">%s</button>',
+            '<button type="button" class="button button-small mpb-copy-shortcode" data-target="#%1$s" style="margin-left:4px;">%2$s</button>',
+            esc_attr($target_id),
             esc_html__('Copy', 'modal-popup-box')
         );
     }

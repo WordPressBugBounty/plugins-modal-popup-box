@@ -4,7 +4,7 @@
  * Plugin Name: Modal Popup Box
  * Plugin URI:  https://awplife.com/wordpress-plugins/modal-popup-box-premium/
  * Description: Create customizable modal popup boxes with CSS animations. Embed images, videos, forms, shortcodes, and more.
- * Version:     2.1.2
+ * Version:     2.1.3
  * Author:      A WP Life
  * Author URI:  https://awplife.com/
  * License:     GPLv2 or later
@@ -20,13 +20,31 @@ if (!defined('ABSPATH')) {
 	exit;
 }
 
+// If Premium version is active, deactivate Free version to prevent conflicts.
+if (is_admin()) {
+	add_action('admin_init', function () {
+		if (!function_exists('is_plugin_active') || !function_exists('deactivate_plugins')) {
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+		}
+		$pro_plugin = 'modal-popup-box-premium/modal-popup-box-premium.php';
+		if (is_plugin_active($pro_plugin)) {
+			deactivate_plugins('modal-popup-box/modal-popup-box.php');
+			add_action('admin_notices', function () {
+				echo '<div class="notice notice-info is-dismissible"><p>';
+				echo esc_html__('Modal Popup Box Premium is active. Free version has been automatically deactivated to prevent conflicts.', 'modal-popup-box');
+				echo '</p></div>';
+			});
+		}
+	});
+}
+
 // Prevent duplicate loading.
 if (defined('MPB_PLUGIN_VER')) {
 	return;
 }
 
 // ── Plugin Constants ────────────────────────────────
-define('MPB_PLUGIN_VER', '2.1.2');
+define('MPB_PLUGIN_VER', '2.1.3');
 define('MPB_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('MPB_PLUGIN_URL', plugin_dir_url(__FILE__));
 define('MPB_PLUGIN_SLUG', 'modalpopupbox');

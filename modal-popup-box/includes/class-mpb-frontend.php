@@ -143,10 +143,8 @@ class MPB_Frontend
                 id="modal-<?php echo esc_attr($post_id); ?>" role="dialog" aria-modal="true"
                 aria-labelledby="mpb-title-<?php echo esc_attr($post_id); ?>" <?php if ('onclick' === $show_modal): ?>
                     style="display:none;" <?php endif; ?>>
-                <div class="mpb-md-content mpb-md-content-<?php echo esc_attr($post_id); ?>"
-                    style="background-color: <?php echo esc_attr($bg_color); ?>;">
-                    <h3 id="mpb-title-<?php echo esc_attr($post_id); ?>" class="mbox-title text-center"
-                        style="margin:0; padding:20px; font-weight:bolder; background:rgba(0,0,0,0.1);">
+                <div class="mpb-md-content mpb-md-content-<?php echo esc_attr($post_id); ?>">
+                    <h3 id="mpb-title-<?php echo esc_attr($post_id); ?>" class="mbox-title text-center">
                         <?php echo esc_html($modal_title ? $modal_title : __('Modal Title', 'modal-popup-box')); ?>
                     </h3>
                     <button type="button" class="mpb-md-close mpb-close-x"
@@ -206,8 +204,10 @@ class MPB_Frontend
      */
     private function get_dynamic_css($post_id, $settings)
     {
-        $width = isset($settings['mpb_width']) ? absint($settings['mpb_width']) : 600;
+        $post_id = absint($post_id);
+        $width = isset($settings['mpb_width']) ? absint($settings['mpb_width']) : 70;
         $height = isset($settings['mpb_height']) ? absint($settings['mpb_height']) : 400;
+        $design = isset($settings['modal_popup_design']) ? $settings['modal_popup_design'] : 'color_1';
         $btn_color = isset($settings['mpb_main_button_color']) ? sanitize_hex_color($settings['mpb_main_button_color']) : '#337ab7';
         $btn_txt = isset($settings['mpb_main_button_text_color']) ? sanitize_hex_color($settings['mpb_main_button_text_color']) : '#fff';
         $custom_css = isset($settings['mpb_custom_css']) ? wp_strip_all_tags($settings['mpb_custom_css']) : '';
@@ -216,28 +216,75 @@ class MPB_Frontend
         $close_btn_txt = isset($settings['mpb_button2_text_color']) ? sanitize_hex_color($settings['mpb_button2_text_color']) : '#333';
         $close_btn_bg_color = isset($settings['mpb_close_btn_bg_color']) ? sanitize_hex_color($settings['mpb_close_btn_bg_color']) : 'transparent';
 
+        // Background color resolution based on design option.
+        $color_map = array(
+            'color_1' => '#008EC2',
+            'color_2' => '#FF0000',
+            'color_3' => '#4CAF50',
+            'color_4' => '#9C27B0',
+            'color_5' => '#FF9800',
+        );
+
+        if ('custom' === $design && !empty($settings['mpb_modal_bg_color'])) {
+            $bg_color = sanitize_hex_color($settings['mpb_modal_bg_color']);
+        } else {
+            $bg_color = isset($color_map[$design]) ? $color_map[$design] : '#008EC2';
+        }
+
         $css = "
             .mpb-modal-{$post_id} {
-                width: {$width}% !important;
+                width: {$width}%;
+                max-width: 90%;
             }
-            .mpb-md-modal-{$post_id}.mpb-md-content-{$post_id} {
-                height: {$height}px;
-                overflow-y: auto;
+            @media only screen and (max-width: 768px) {
+                .mpb-modal-{$post_id} {
+                    width: 90%;
+                    max-width: 95%;
+                }
+            }
+            @media only screen and (max-width: 480px) {
+                .mpb-modal-{$post_id} {
+                    width: 95%;
+                }
+            }
+            .mpb-modal-{$post_id} .mpb-md-content-{$post_id} {
+                background-color: {$bg_color};
+                max-height: {$height}px;
+                display: flex;
+                flex-direction: column;
+                overflow: hidden;
                 position: relative;
                 border-radius: 3px;
                 margin: 0 auto;
             }
+            @media only screen and (max-width: 768px) {
+                .mpb-modal-{$post_id} .mpb-md-content-{$post_id} {
+                    max-height: 80vh;
+                }
+            }
+            .mpb-modal-{$post_id} .mpb-content-body {
+                padding: 15px;
+                overflow-y: auto;
+                flex: 1 1 auto;
+            }
+            .mpb-modal-{$post_id} .mbox-title {
+                margin: 0;
+                padding: 20px;
+                font-weight: 700;
+                background: rgba(0, 0, 0, 0.1);
+                flex-shrink: 0;
+            }
             .btn-bg-{$post_id} {
-                background-color: {$btn_color} !important;
-                color: {$btn_txt} !important;
+                background-color: {$btn_color};
+                color: {$btn_txt};
                 cursor: pointer;
             }
             .btn-bg-{$post_id}:hover {
                 opacity: 0.9;
             }
             .btn-close-bg-{$post_id} {
-                background-color: {$close_btn_color} !important;
-                color: {$close_btn_txt} !important;
+                background-color: {$close_btn_color};
+                color: {$close_btn_txt};
                 cursor: pointer;
             }
             .btn-close-bg-{$post_id}:hover {
@@ -247,31 +294,30 @@ class MPB_Frontend
                 position: absolute;
                 top: 10px;
                 right: 14px;
-                background-color: {$close_btn_bg_color} !important;
+                background: {$close_btn_bg_color};
                 border: none;
+                box-shadow: none;
+                outline: none;
+                appearance: none;
                 font-size: 22px;
                 cursor: pointer;
-                color: {$close_icon_color} !important;
+                color: {$close_icon_color};
                 line-height: 1;
                 padding: 4px 8px;
-                opacity: 0.7;
+                opacity: 0.9;
+                z-index: 10;
                 transition: all 0.2s ease;
-                border: 1px solid transparent;
-                border-radius: 4px;
             }
             .mpb-modal-{$post_id} .mpb-close-x:hover {
                 opacity: 1;
-                background-color: {$close_btn_bg_color} !important;
-                border-color: {$close_icon_color} !important;
+                color: {$close_icon_color};
             }
             #mpb-wrapper-{$post_id} .mpb-md-overlay {
-                background: rgba(0, 0, 0, 0.7) !important;
-            }
-            .mpb-modal-{$post_id} .mpb-content-body {
-                padding: 15px;
+                background: rgba(0, 0, 0, 0.7);
             }
             .mpb-modal-{$post_id} .mpb-buttons {
                 padding: 10px 15px 15px;
+                flex-shrink: 0;
             }
             .mpb-trigger-wrap {
                 display: inline-block;
@@ -279,6 +325,6 @@ class MPB_Frontend
             {$custom_css}
         ";
 
-        return $css;
+        return wp_strip_all_tags($css);
     }
 }
